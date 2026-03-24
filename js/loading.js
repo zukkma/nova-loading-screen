@@ -157,7 +157,7 @@ var _tips = [
     { user: 'hana', msg: 'Unite a nuestro servidor de discord usando !discord' },
 ];
 
-var _colors = { 'Zukma': '#c91515', 'hana': '#f9a8d4' };
+var _colors = { '(owner) zukma': '#c91515', '(co-owner) hana': '#f9a8d4' };
 var _tipIndex = 0;
 var _MAX_MSGS = 4;
 var _msgEls = [];
