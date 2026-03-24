@@ -38,7 +38,7 @@ if (urlSteam) {
 function startMusic(vol) {
     if (musicStarted) return;
     musicStarted = true;
-    music.volume = (vol !== undefined) ? vol : 0.3;
+    music.volume = 0.3;
     music.play();
 }
 
@@ -108,7 +108,7 @@ function switchPage() {
 setInterval(switchPage, 5000);
 
 window.GameDetails = function(serverName, serverURL, mapName, maxPlayers, steamID, gameMode, volume, language) {
-    startMusic(volume);
+    startMusic();
 
     if (steamID) {
         steamIdEl.textContent = 'STEAM ID: ' + steamID;
@@ -142,3 +142,60 @@ window.SetStatusChanged = function(s) {
         fill.style.width = '100%';
     }
 };
+
+var _cbMsgs = document.getElementById('_cb_msgs');
+
+var _tips = [
+    { user: 'Zukma', msg: 'Si ves a un usuario rompiendo las reglas abrí ticket en discord.' },
+    { user: 'hana', msg: 'Si te metés al discord y al steamgroup recibís el rango PLANET' },
+    { user: 'Zukma', msg: 'El buildmode se alterna usando los comandos !build y !pvp' },
+    { user: 'hana', msg: 'Usar el Buildmode para cualquier cosa que implique molestar es sancionable' },
+    { user: 'Zukma', msg: 'Nova fue fundado en el 19/02/24' },
+    { user: 'hana', msg: 'Si querés ver la documentación de Nova usá !motd' },
+    { user: 'Zukma', msg: 'Lee todas las reglas que están a la derecha de esta pantalla de carga, son pocas.' },
+    { user: 'hana', msg: 'Gracias por jugar en Nova' },
+    { user: 'hana', msg: 'Unite a nuestro servidor de discord usando !discord' },
+];
+
+var _colors = { 'Zukma': '#c91515', 'hana': '#f9a8d4' };
+var _tipIndex = 0;
+var _MAX_MSGS = 4;
+var _msgEls = [];
+
+function _addMsg(user, text) {
+    var wrap = document.createElement('div');
+    wrap.className = '_cbm';
+
+    var name = document.createElement('span');
+    name.className = '_cbn';
+    name.textContent = user;
+    name.style.color = _colors[user] || '#ffffff';
+
+    var msg = document.createElement('span');
+    msg.className = '_cbt';
+    msg.textContent = text;
+
+    wrap.appendChild(name);
+    wrap.appendChild(msg);
+    _cbMsgs.appendChild(wrap);
+    _msgEls.push(wrap);
+
+    if (_msgEls.length > _MAX_MSGS) {
+        var old = _msgEls.shift();
+        old.style.opacity = '0';
+        setTimeout(function() {
+            if (old.parentNode) old.parentNode.removeChild(old);
+        }, 800);
+    }
+}
+
+function _nextTip() {
+    var t = _tips[_tipIndex % _tips.length];
+    _addMsg(t.user, t.msg);
+    _tipIndex++;
+}
+
+setTimeout(function() {
+    _nextTip();
+    setInterval(_nextTip, 3000);
+}, 1200);
