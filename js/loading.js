@@ -17,10 +17,10 @@ var urlSteam = params.get('SteamId') || params.get('steamid') || '';
 function setBackground(mapName) {
     var img = new Image();
     img.onload = function() {
-        background.style.backgroundImage = 'url(images/' + mapName + '.jpg)';
+        background.src = 'images/' + mapName + '.jpg';
     };
     img.onerror = function() {
-        background.style.backgroundImage = 'url(images/gm_bigcity.jpg)';
+        background.src = 'images/gm_bigcity.jpg';
     };
     img.src = 'images/' + mapName + '.jpg';
 }
@@ -28,7 +28,7 @@ function setBackground(mapName) {
 if (urlMap) {
     setBackground(urlMap);
 } else {
-    background.style.backgroundImage = 'url(images/gm_bigcity.jpg)';
+    background.src = 'images/gm_bigcity.jpg';
 }
 
 if (urlSteam) {
